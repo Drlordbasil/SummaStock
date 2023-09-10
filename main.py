@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 from transformers import pipeline, TFAutoModelForSequenceClassification
 
+
 class NewsScraper:
     def __init__(self, source_url):
         self.source_url = source_url
@@ -11,6 +12,7 @@ class NewsScraper:
         soup = BeautifulSoup(response.text, 'html.parser')
         news_articles = soup.find_all('article')
         return news_articles
+
 
 class NewsExtractor:
     def __init__(self, news_article):
@@ -32,6 +34,7 @@ class NewsExtractor:
         author_details = self.news_article.find('div', class_='author').text
         return author_details
 
+
 class StockMarketAPI:
     def __init__(self, api_key):
         self.api_key = api_key
@@ -42,19 +45,22 @@ class StockMarketAPI:
         stock_data = response.json()
         return stock_data
 
+
 class NewsSummarizer:
     def __init__(self, model_name):
         self.model_name = model_name
-        
+
     def preprocess_text(self, text):
         # Preprocess text using NLP techniques
-        preprocessed_text = text # Placeholder logic for preprocessing text
+        preprocessed_text = text  # Placeholder logic for preprocessing text
         return preprocessed_text
 
     def generate_summary(self, text):
         summarizer = pipeline("summarization", model=self.model_name)
-        summary = summarizer(text, max_length=80, min_length=20, do_sample=False)[0]['summary_text']
+        summary = summarizer(text, max_length=80, min_length=20, do_sample=False)[
+            0]['summary_text']
         return summary
+
 
 class SentimentAnalysis:
     def __init__(self, model_name):
@@ -62,14 +68,16 @@ class SentimentAnalysis:
 
     def preprocess_text(self, text):
         # Preprocess text using NLP techniques
-        preprocessed_text = text # Placeholder logic for preprocessing text
+        preprocessed_text = text  # Placeholder logic for preprocessing text
         return preprocessed_text
 
     def analyze_sentiment(self, text):
-        sentiment_classifier = pipeline("sentiment-analysis", model=self.model_name)
+        sentiment_classifier = pipeline(
+            "sentiment-analysis", model=self.model_name)
         sentiment_score = sentiment_classifier(text)[0]['score']
         sentiment_label = sentiment_classifier(text)[0]['label']
         return sentiment_score, sentiment_label
+
 
 class StockPricePredictor:
     def __init__(self, model_name):
@@ -77,19 +85,22 @@ class StockPricePredictor:
 
     def preprocess_data(self, stock_data, summary, sentiment_score):
         # Preprocess data for training
-        preprocessed_data = stock_data + summary + sentiment_score # Placeholder logic for preprocessing data
+        # Placeholder logic for preprocessing data
+        preprocessed_data = stock_data + summary + sentiment_score
         return preprocessed_data
 
     def train_model(self, preprocessed_data):
         # Train predictive model using machine learning algorithms
-        model = TFAutoModelForSequenceClassification.from_pretrained(self.model_name)
-        trained_model = model # Placeholder logic for training the model
+        model = TFAutoModelForSequenceClassification.from_pretrained(
+            self.model_name)
+        trained_model = model  # Placeholder logic for training the model
         return trained_model
 
     def make_prediction(self, trained_model, preprocessed_data):
         # Use trained model to make predictions
-        predictions = trained_model # Placeholder logic for making predictions
+        predictions = trained_model  # Placeholder logic for making predictions
         return predictions
+
 
 class PredictionAlerts:
     def __init__(self, prediction_threshold):
@@ -104,6 +115,7 @@ class PredictionAlerts:
             message = "Potential profitable trade detected"
             self.send_notification(message)
 
+
 class PerformanceMonitor:
     def __init__(self, actual_data):
         self.actual_data = actual_data
@@ -115,8 +127,10 @@ class PerformanceMonitor:
 
     def calculate_accuracy(self, predicted_data, actual_data):
         # Placeholder logic for calculating accuracy
-        accuracy = predicted_data + actual_data # Placeholder logic for calculating accuracy
+        # Placeholder logic for calculating accuracy
+        accuracy = predicted_data + actual_data
         return accuracy
+
 
 class PortfolioManager:
     def __init__(self, investment_goals, risk_appetite):
@@ -125,7 +139,8 @@ class PortfolioManager:
 
     def provide_insights(self):
         # Provide insights on portfolio management based on investment goals and risk appetite
-        insights = self.generate_insights(self.investment_goals, self.risk_appetite)
+        insights = self.generate_insights(
+            self.investment_goals, self.risk_appetite)
         return insights
 
     def recommend_adjustments(self, stock_predictions):
@@ -135,13 +150,16 @@ class PortfolioManager:
 
     def generate_insights(self, investment_goals, risk_appetite):
         # Placeholder logic for generating insights
-        insights = investment_goals + risk_appetite # Placeholder logic for generating insights
+        # Placeholder logic for generating insights
+        insights = investment_goals + risk_appetite
         return insights
 
     def generate_recommendations(self, stock_predictions):
         # Placeholder logic for generating recommendations
-        recommendations = stock_predictions # Placeholder logic for generating recommendations
+        # Placeholder logic for generating recommendations
+        recommendations = stock_predictions
         return recommendations
+
 
 # Example usage
 scraper = NewsScraper('https://www.example.com/news')
@@ -155,14 +173,17 @@ for article in news_articles:
     author_details = extractor.extract_author_details()
     summarizer = NewsSummarizer('t5-base')
     summary = summarizer.generate_summary(content)
-    sentiment_analysis = SentimentAnalysis('distilbert-base-uncased-finetuned-sst-2-english')
-    sentiment_score, sentiment_label = sentiment_analysis.analyze_sentiment(content)
+    sentiment_analysis = SentimentAnalysis(
+        'distilbert-base-uncased-finetuned-sst-2-english')
+    sentiment_score, sentiment_label = sentiment_analysis.analyze_sentiment(
+        content)
 
     stock_api = StockMarketAPI('API_KEY')
     stock_data = stock_api.get_stock_data('AAPL')
 
     predictor = StockPricePredictor('lstm')
-    preprocessed_data = predictor.preprocess_data(stock_data, summary, sentiment_score)
+    preprocessed_data = predictor.preprocess_data(
+        stock_data, summary, sentiment_score)
     trained_model = predictor.train_model(preprocessed_data)
     prediction = predictor.make_prediction(trained_model, preprocessed_data)
 
